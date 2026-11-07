@@ -1,20 +1,21 @@
 <Solution>
     <Folder Name="/Solution Items/">
-        <File Path=".editorconfig"/>
-        <File Path=".github\workflows\build-and-test.yml"/>
-        <File Path=".gitignore"/>
-        <File Path="AGENTS.md"/>
-        <File Path="commitlint.config.mjs"/>
-        <File Path="global.json"/>
-        <File Path="LICENSE"/>
-        <File Path="Nymb.sln.DotSettings"/>
-        <File Path="Nymb.sln.DotSettings.user"/>
-        <File Path="README.md"/>
+        <File Path=".editorconfig" />
+        <File Path=".github\workflows\build-and-test.yml" />
+        <File Path=".gitignore" />
+        <File Path="AGENTS.md" />
+        <File Path="commitlint.config.mjs" />
+        <File Path="global.json" />
+        <File Path="LICENSE" />
+        <File Path="Nymb.sln.DotSettings" />
+        <File Path="Nymb.sln.DotSettings.user" />
+        <File Path="README.md" />
     </Folder>
     <Folder Name="/src/">
-        <Project Path="src/Nymb/Nymb.csproj"/>
+        <Project Path="src/Nymb/Nymb.csproj" />
     </Folder>
     <Folder Name="/test/">
-        <Project Path="test/Nymb.Tests/Nymb.Tests.csproj"/>
+        <Project Path="test/Nymb.TestInfrastructure/Nymb.TestInfrastructure.csproj" />
+        <Project Path="test/Nymb.Tests/Nymb.Tests.csproj" />
     </Folder>
 </Solution>

@@ -1,3 +1,4 @@
+using System.Text;
 using Nymb.Lexer;
 
 namespace Nymb.Tests.Lexer;
@@ -13,8 +14,8 @@ public class NymbLexerTests
     [Fact]
     public void Input_is_split_into_bare_tokens_whitespaces_delimiters_and_parentheses()
     {
-        var lexerConfiguration = NymbLexerConfiguration.Default with { Delimiters = ['='] };
-        var tokens = new NymbLexer("(foo = bar)\n", lexerConfiguration).Tokenize();
+        var lexerConfiguration = NymbLexerConfiguration.Default with { Delimiters = ["="] };
+        var tokens = new NymbLexer("(foo = bar)\n").Tokenize(lexerConfiguration);
 
         Assert.Collection(
             tokens,
@@ -26,21 +27,43 @@ public class NymbLexerTests
             token => AssertToken(token, TokenType.BareToken, "bar", "bar"),
             token => AssertToken(token, TokenType.CloseParenthesis, ")", ")"),
             token => AssertToken(token, TokenType.Whitespace, "\n", "\n"));
+        return;
+
+        void AssertToken(Token token, TokenType type, string value, string rawValue)
+        {
+            Assert.Equal(type, token.Type);
+            Assert.Equal(value, token.Value);
+            Assert.Equal(rawValue, token.RawValue);
+        }
     }
 
     [Fact]
     public void Lexer_is_deterministic_by_default()
     {
-        var lexerConfiguration = NymbLexerConfiguration.Default with { Delimiters = [';'] };
-        var lexer = new NymbLexer("word (value)", lexerConfiguration);
+        var lexer = new NymbLexer("some input");
 
         Assert.Equal(lexer.Tokenize(), lexer.Tokenize());
     }
 
-    private static void AssertToken(Token token, TokenType type, string value, string rawValue)
+    [Fact]
+    public void Delimiters_do_not_need_whitespaces()
     {
-        Assert.Equal(type, token.Type);
-        Assert.Equal(value, token.Value);
-        Assert.Equal(rawValue, token.RawValue);
+        var configuration = NymbLexerConfiguration.Default with { Delimiters = ["="] };
+        var lexer = new NymbLexer("y=s");
+
+        var tokens = lexer.Tokenize(configuration);
+
+        Assert.Equal(3, tokens.Count);
+    }
+
+    [Fact]
+    public void Control_characters_are_not_allowed_as_delimiters()
+    {
+        var configuration = NymbLexerConfiguration.Default with { Delimiters = ["\0"] };
+        var lexer =  new NymbLexer("some input");
+
+        var exception = Assert.Throws<FormatException>(() => lexer.Tokenize(configuration));
+
+        Assert.Equal("Delimiters must not contain control characters.", exception.Message);
     }
 }

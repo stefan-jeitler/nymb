@@ -1,3 +1,3 @@
 namespace Nymb.Lexer;
 
-internal readonly record struct SourcePosition(int Offset, int Line, int Column);
+public readonly record struct SourcePosition(int CharIndex, int Line, int Column);

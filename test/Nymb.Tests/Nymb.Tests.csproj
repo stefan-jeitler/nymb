@@ -17,6 +17,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Nymb\Nymb.csproj"/>
+        <ProjectReference Include="..\Nymb.TestInfrastructure\Nymb.TestInfrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,3 +1,5 @@
 namespace Nymb.Lexer;
 
-internal readonly record struct SourceSpan(SourcePosition Start, SourcePosition End);
+public readonly record struct SourceSpan(SourcePosition Start, SourcePosition End)
+{
+}
